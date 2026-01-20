@@ -4,6 +4,7 @@ wallpapersDir="$HOME/Pictures/Wallpapers"
 wallpapers=("$wallpapersDir"/*)
 history_file="$HOME/.cache/wallpaper_history"
 history=()
+kitty_sockets=()
 
 [ -f $history_file ] && mapfile -t history < "$history_file"
 if (( ${#history[@]} > 4 )); then
@@ -31,11 +32,14 @@ while true; do
         history=("${history[@]:1}")
     fi
 
-    KITTY_SOCKET=$(ls /tmp/ | grep mykitty)
-    echo $KITTY_SOCKET
-    if [ -n "$KITTY_SOCKET" ]; then
-        kitten @ --to "unix:/tmp/$KITTY_SOCKET" set-colors -a "$HOME/.cache/pal/kitty-colors.conf"
-    fi
+    while IFS= read -r s; do
+        kitty_sockets+=("$s")
+    done < <(ls /tmp/ 2>/dev/null | grep mykitty)
+    
+    for s in "${kitty_sockets[@]}"; do
+        kitten @ --to "unix:/tmp/$s" set-colors -a "$HOME/.cache/pal/kitty-colors.conf"
+    done
+
     for pid in $(pgrep nvim); do
         nvim --server /run/user/1000/nvim.${pid}.0 --remote-expr "execute('ReloadWal')"
     done
