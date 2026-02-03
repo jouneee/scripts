@@ -11,7 +11,7 @@ if (( ${#history[@]} > 4 )); then
     history=("${history[@]: -4}")
 fi
 
-while true; do
+#while true; do
     wallpaperId=$(( RANDOM % ${#wallpapers[@]}))
     selectedWallpaper="${wallpapers[$wallpaperId]}"
 
@@ -24,7 +24,8 @@ while true; do
     done
 
     swww img -t simple --transition-fps 144 --transition-step 2 $selectedWallpaper
-    pal -m 0 -s 1.0 -nv $selectedWallpaper
+    sd "/.*" $selectedWallpaper ~/.config/swaylock/config
+    pal -m km -s 1.4 $selectedWallpaper
 
     history+=("$selectedWallpaper")
     printf "%s\n" "${history[@]}" > "$history_file"
@@ -45,5 +46,5 @@ while true; do
     done
 
     sleep 3600
-done
+#done
 
