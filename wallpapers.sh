@@ -7,8 +7,8 @@ history=()
 kitty_sockets=()
 
 [ -f $history_file ] && mapfile -t history < "$history_file"
-if (( ${#history[@]} > 4 )); then
-    history=("${history[@]: -4}")
+if (( ${#history[@]} > 6 )); then
+    history=("${history[@]: -6}")
 fi
 
 #while true; do
@@ -25,7 +25,7 @@ fi
 
     swww img -t simple --transition-fps 144 --transition-step 2 $selectedWallpaper
     sd "/.*" $selectedWallpaper ~/.config/swaylock/config
-    pal -m km -s 1.4 $selectedWallpaper
+    pal -m an -s 1.2 $selectedWallpaper
 
     history+=("$selectedWallpaper")
     printf "%s\n" "${history[@]}" > "$history_file"
@@ -42,7 +42,7 @@ fi
     done
 
     for pid in $(pgrep nvim); do
-        nvim --server /run/user/1000/nvim.${pid}.0 --remote-expr "execute('ReloadWal')"
+        nvim --server /run/user/1000/nvim.${pid}.0 --remote-expr "execute('ReloadPal')"
     done
 
     sleep 3600

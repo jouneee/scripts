@@ -69,7 +69,7 @@ def get_dcolor(image_path):
         rimg = cv2.resize(img, (50, 50))
         bimg = cv2.GaussianBlur(rimg, (9, 9), 3)
         dcolor = get_dominant_color_weighted(bimg)
-        if (dcolor[0]+dcolor[1]+dcolor[2]) / 255 > 2.0:
+        if (dcolor[0]+dcolor[1]+dcolor[2]) / 3 > 240:
             return bincount(bimg)
         else:
             return dcolor
