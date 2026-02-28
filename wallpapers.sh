@@ -11,16 +11,16 @@ if (( ${#history[@]} > 6 )); then
     history=("${history[@]: -6}")
 fi
 
-#while true; do
+while true; do
     wallpaperId=$(( RANDOM % ${#wallpapers[@]}))
     selectedWallpaper="${wallpapers[$wallpaperId]}"
 
     in_history=false
     for h in "${history[@]}"; do
-    if [[ "$h" == "$selectedWallpaper" ]]; then
-        in_history=true
-        break
-    fi
+        if [[ "$h" == "$selectedWallpaper" ]]; then
+            in_history=true
+            break
+        fi
     done
 
     swww img -t simple --transition-fps 144 --transition-step 2 $selectedWallpaper
@@ -41,10 +41,9 @@ fi
         kitten @ --to "unix:/tmp/$s" set-colors -a "$HOME/.cache/pal/kitty-colors.conf"
     done
 
-    for pid in $(pgrep nvim); do
-        nvim --server /run/user/1000/nvim.${pid}.0 --remote-expr "execute('ReloadPal')"
-    done
-
-    sleep 3600
-#done
-
+    # for pid in $(pgrep nvim); do
+    #     nvim --server /run/user/1000/nvim.${pid}.0 --remote-expr "execute('ReloadPal')"
+    # done
+    
+    sleep 7200
+done
