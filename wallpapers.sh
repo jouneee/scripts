@@ -24,7 +24,7 @@ while true; do
     done
 
     swww img -t simple --transition-fps 144 --transition-step 2 $selectedWallpaper
-    sd "/.*" $selectedWallpaper ~/.config/swaylock/config
+    $HOME/Documents/code/scripts/replace.lua "/.*" $selectedWallpaper ~/.config/swaylock/config
     pal -m an -s 1.2 $selectedWallpaper
 
     history+=("$selectedWallpaper")
